@@ -44,6 +44,12 @@ dependencies {
     testImplementation("junit:junit")
 }
 
+sourceSets {
+    test {
+        runtimeClasspath = files(runtimeClasspath).minus(files(main.map { it.output })).plus(files(tasks.jar))
+    }
+}
+
 tasks {
     val getLicenses by registering(GatherLicenseTask::class) {
         configuration(shaded)
